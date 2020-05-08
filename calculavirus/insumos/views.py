@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
-from calculavirus.users.serializers import UserSerializer, GroupSerializer
-
+from calculavirus.insumos.serializers import UserSerializer, GroupSerializer, InsumoSerializer
+from .models import *
 
 '''
 Usar un Auth Sencillo
@@ -30,4 +30,13 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class InsumoViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows insumos to be viewed or edited.
+    """
+    queryset = Insumo.objects.all()
+    serializer_class = InsumoSerializer
     permission_classes = [permissions.IsAuthenticated]
