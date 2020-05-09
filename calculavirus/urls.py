@@ -16,6 +16,9 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework import routers
 from calculavirus.insumos import views
+from django.conf import settings
+from django.views.static import serve
+from django.conf.urls import url
 # from calculavirus.insumos import views
 
 
@@ -23,6 +26,7 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'insumos', views.InsumoViewSet)
+router.register(r'lugares', views.LugarCompraViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -30,3 +34,10 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^media/(?P<path>.*)$', serve, {
+        'document_root': settings.MEDIA_ROOT,
+        }),
+    ]
