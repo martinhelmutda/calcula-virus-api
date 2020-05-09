@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework import routers
 from calculavirus.insumos import views
+from calculavirus.checklist import views
 # from calculavirus.insumos import views
 
 
@@ -23,6 +24,8 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'insumos', views.InsumoViewSet)
+router.register(r'checklist',views.ChecklistViewSet)
+router.register(r'checklistinsumo',views.ChecklistInsumoViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

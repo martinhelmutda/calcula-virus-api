@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'calculavirus.insumos.apps.InsumosConfig',
+    'calculavirus.checklist.apps.ChecklistConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
