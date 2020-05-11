@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
-from calculavirus.insumos.serializers import UserSerializer, GroupSerializer, InsumoSerializer
+from calculavirus.insumos.serializers import UserSerializer, GroupSerializer, InsumoSerializer, LugarCompraSerializer
 from .models import *
 
 '''
@@ -21,7 +21,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
-    
+
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -39,4 +39,12 @@ class InsumoViewSet(viewsets.ModelViewSet):
     """
     queryset = Insumo.objects.all()
     serializer_class = InsumoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class LugarCompraViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows Lugares de compra to ve viewed
+    """
+    queryset = LugarCompra.objects.all()
+    serializer_class = LugarCompraSerializer
     permission_classes = [permissions.IsAuthenticated]
