@@ -8,3 +8,4 @@ class ChecklistInsumo(models.Model):
     insumo=models.ForeignKey(Insumo,on_delete=models.CASCADE)
     checklist=models.ForeignKey(Checklist,on_delete=models.CASCADE)
     cantidad = models.IntegerField()
+    comprado = models.BooleanField()

@@ -10,7 +10,7 @@ class ChecklistSerializer(serializers.HyperlinkedModelSerializer):
 class ChecklistInsumoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ChecklistInsumo
-        fields = ['id','checklist_id','insumo_nombre','cantidad']
+        fields = ['id','checklist_id','insumo_nombre','cantidad', 'comprado']
 
     checklist_id = serializers.SerializerMethodField('get_checklist_id')
 
