@@ -2,24 +2,25 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from .models import *
 
+# Aquí va todo aquello que se puede pedit por HTTP GET
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'groups']
+        fields = ['id','url', 'username', 'email', 'groups']
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ['url', 'name']
+        fields = ['id','url', 'name']
 
 class InsumoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Insumo
-        fields = ['nombre', 'descripcion','lugar_compra', 'categoria', 'caducidad', 'cantidad', 'prioridad', 'duracion_promedio']
+        fields = ['id','nombre', 'descripcion','lugar_compra', 'categoria', 'caducidad', 'cantidad', 'prioridad', 'duracion_promedio']
 
 class LugarCompraSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LugarCompra
-        fields = ['nombre','descripcion','img']
+        fields = ['id','nombre','descripcion','img']
