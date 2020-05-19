@@ -1,8 +1,10 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
-from calculavirus.insumos.serializers import UserSerializer, GroupSerializer, InsumoSerializer, LugarCompraSerializer
+from calculavirus.insumos.serializers import GroupSerializer, InsumoSerializer, LugarCompraSerializer, UserSerializer
 from .models import *
+from rest_framework.response import Response
+from rest_framework.exceptions import ParseError
 
 '''
 Usar un Auth Sencillo
@@ -41,6 +43,15 @@ class InsumoViewSet(viewsets.ModelViewSet):
     serializer_class = InsumoSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    # @detail_route(methods=['post'])
+
+    def upload_docs(self):
+        try:
+            file = self.request.data['file']
+        except KeyError:
+            raise ParseError('Request has no resource file attached')
+        insumo = Insumo.objects.create(image=file)
+
 class LugarCompraViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows Lugares de compra to ve viewed
@@ -48,3 +59,10 @@ class LugarCompraViewSet(viewsets.ModelViewSet):
     queryset = LugarCompra.objects.all()
     serializer_class = LugarCompraSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def upload_docs(self):
+        try:
+            file = self.request.data['file']
+        except KeyError:
+            raise ParseError('Request has no resource file attached')
+        insumo = Insumo.objects.create(img=file)
