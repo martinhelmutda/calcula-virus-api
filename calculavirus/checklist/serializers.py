@@ -10,7 +10,7 @@ class ChecklistSerializer(serializers.HyperlinkedModelSerializer):
 class ChecklistInsumoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ChecklistInsumo
-        fields = ['id','checklist_id','insumo_nombre','cantidad', 'comprado']
+        fields = ['id','checklist_id','insumo_nombre','cantidad', 'comprado', 'usuario_nombre', 'user']
 
     checklist_id = serializers.SerializerMethodField('get_checklist_id')
 
@@ -21,3 +21,8 @@ class ChecklistInsumoSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_insumo_nombre(self,obj):
         return obj.insumo.nombre
+
+    usuario_nombre = serializers.SerializerMethodField('get_usuario_nombre')
+
+    def get_usuario_nombre(self, obj):
+        return obj.user.name
