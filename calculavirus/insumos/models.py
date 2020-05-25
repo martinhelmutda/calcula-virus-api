@@ -1,5 +1,5 @@
 from django.db import models
-
+from datetime import datetime
 
 # Create your models here.
 
@@ -23,7 +23,7 @@ class Insumo(models.Model):
     nombre = models.CharField( max_length=120)
     marca = models.CharField( max_length=120)
     descripcion = models.TextField(blank=True)
-    lugar_compra = models.OneToOneField(
+    lugar_compra = models.ForeignKey(
         LugarCompra,
         on_delete=models.CASCADE,
     )
@@ -36,3 +36,4 @@ class Insumo(models.Model):
         upload_to=productFile,
         max_length=254, blank=True, null=True
     )
+    fecha_ultima_compra = models.DateTimeField(default=datetime.now)
