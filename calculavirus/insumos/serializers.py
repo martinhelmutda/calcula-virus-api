@@ -20,20 +20,20 @@ class InsumoSerializer(serializers.HyperlinkedModelSerializer):
         model = Insumo
         fields = (
             'id',
-            'nombre', 
+            'nombre',
             'marca',
             'descripcion',
-            'lugar_compra', 
-            'categoria', 
-            'caducidad', 
-            'cantidad', 
-            'prioridad', 
-            'duracion_promedio', 
-            'image'
+            'lugar_compra',
+            'categoria',
+            'caducidad',
+            'cantidad',
+            'prioridad',
+            'duracion_promedio',
+            'image',
+            'user'
             )
 
 class LugarCompraSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LugarCompra
         fields = ['id','nombre','descripcion','img']
-
