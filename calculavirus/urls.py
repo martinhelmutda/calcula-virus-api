@@ -17,13 +17,14 @@ from django.urls import include, path
 from rest_framework import routers
 from calculavirus.insumos import views as insumo_views
 from calculavirus.checklist import views as checklist_views
+from calculavirus.customeUsers import views as customUsers_views
 from django.contrib import admin
 from django.conf import settings
 from django.views.static import serve
 from django.conf.urls import url
 
 router = routers.DefaultRouter()
-router.register(r'users', insumo_views.UserViewSet)
+router.register(r'users', customUsers_views.CustomUsersViewSet)
 router.register(r'groups', insumo_views.GroupViewSet)
 router.register(r'insumos', insumo_views.InsumoViewSet)
 router.register(r'lugares', insumo_views.LugarCompraViewSet)

@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from calculavirus.customeUsers.models import CustomUsers
 
 # Create your models here.
 
@@ -27,6 +28,7 @@ class Insumo(models.Model):
         LugarCompra,
         on_delete=models.CASCADE,
     )
+    user = models.ForeignKey( CustomUsers, on_delete = models.CASCADE)
     categoria = models.CharField( max_length=120)
     caducidad = models.DateTimeField('Fecha de Caducidad')
     cantidad = models.CharField( max_length=30 )
