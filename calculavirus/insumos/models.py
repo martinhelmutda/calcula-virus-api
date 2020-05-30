@@ -29,7 +29,7 @@ class Insumo(models.Model):
         LugarCompra,
         on_delete=models.CASCADE,
     )
-    user = models.ForeignKey( CustomUsers, on_delete = models.CASCADE)
+    user = models.ForeignKey( CustomUsers, on_delete = models.CASCADE,null = True)
     categoria = models.CharField( max_length=120)
     caducidad = models.DateTimeField('Fecha de Caducidad')
     cantidad = models.CharField( max_length=30 )

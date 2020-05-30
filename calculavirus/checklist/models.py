@@ -4,6 +4,7 @@ from calculavirus.customeUsers.models import CustomUsers
 
 class Checklist(models.Model):
     lugar_compra = models.CharField( max_length=120)
+    user = models.ForeignKey(CustomUsers, on_delete=models.CASCADE,null=True)
 
 class ChecklistInsumo(models.Model):
     insumo=models.ForeignKey(Insumo,on_delete=models.CASCADE)

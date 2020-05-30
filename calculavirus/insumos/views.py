@@ -7,6 +7,7 @@ from calculavirus.insumos.serializers import GroupSerializer, InsumoSerializer, 
 from .models import *
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
+from rest_framework.decorators import action
 import datetime
 
 '''
@@ -48,16 +49,24 @@ class InsumoViewSet(viewsets.ModelViewSet):
 
     #@detail_route(methods=['post'])
 
+    @action(detail=False)
+    def get_insumo_by_user(self,request):
+        user_email=request.GET['user_email']
+        insumos = Insumo.objects.filter(user__email=user_email)
+        serializer_context = {
+            'request': request,
+        }
+        serializer =  InsumoSerializer(insumos,many=True,context=serializer_context)
+        return Response({'count':insumos.count(),'next':None,'previous':None,'results':serializer.data})
+
     def post(self,request,pk):
         if(int(pk)>10000):
             insumo=Insumo.objects.get(pk=(int(pk)-10000))
             insumo.delete()
             return Response({"All": "OK"})
         if(int(pk)==0):
-            print("Case 1")
             insumo = Insumo()
         else:
-            print("Case 2")
             insumo=Insumo.objects.get(pk=pk)
         request_dict=request.data.dict()
         lugar=LugarCompra.objects.get(id=request_dict["lugar_compra"])
@@ -72,8 +81,18 @@ class InsumoViewSet(viewsets.ModelViewSet):
         insumo.prioridad = request_dict["prioridad"]
         insumo.duracion_promedio = request_dict["duracion_promedio"]
         insumo.cantidad = request_dict["cantidad"]
+        if(int(pk)==0):
+            insumo.user = CustomUsers.objects.get(id=request_dict["user_id"])
         insumo.save()
         return Response({"All":"OK"})
+
+    @action(detail=True,methods=['post'])
+    def change_buy_date(self,request,pk=None):
+        insumo = self.get_object()
+        correct_date = datetime.datetime.strptime(request.data['new_date'],'%a %b %d %H:%M:%S CDT %Y').strftime('%Y-%m-%d %H:%M')
+        insumo.fecha_ultima_compra=correct_date
+        insumo.save()
+        return Response({"All": "OK"})
 
     def upload_docs(self):
         try:
