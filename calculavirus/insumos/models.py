@@ -4,17 +4,28 @@ from django.db import models
 # Create your models here.
 
 def productFile(instance, filename):
-    return '/'.join( ['products', str(instance.id), filename] )
+    print(str(instance.id))
+    return '/'.join( ['products',filename] )
+
+def lugarFile(instance, filename):
+    print(str(instance.id))
+    return '/'.join( ['lugares',filename] )
 
 
 class LugarCompra(models.Model):
     nombre = models.CharField(max_length=120)
     descripcion = models.TextField(blank=True)
-    img = models.ImageField(
-        upload_to=productFile,
+    image = models.ImageField(
+        upload_to=lugarFile,
         max_length=254, blank=True, null=True,
-        default = 0
+        default = "location.png"
     )
+
+    # def __init__(self, name, creation, update, *args, **kwargs):
+    #     super(LugarCompra, self).__init__(*args, **kwargs)
+    #     self.name = name
+    #     self.creation_datetime = creation
+    #     self.update_datetime = update
 
     def __str__(self):
         return "%s" % self.nombre

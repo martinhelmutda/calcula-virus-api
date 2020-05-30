@@ -1,10 +1,12 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import viewsets, permissions, mixins,generics
 from calculavirus.insumos.serializers import GroupSerializer, InsumoSerializer, LugarCompraSerializer, UserSerializer
 from .models import *
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.exceptions import ParseError
+from django.http.multipartparser import MultiPartParser
+from rest_framework.parsers import FormParser, JSONParser
 
 '''
 Usar un Auth Sencillo
@@ -57,8 +59,15 @@ class LugarCompraViewSet(viewsets.ModelViewSet):
     API endpoint that allows Lugares de compra to ve viewed
     """
     queryset = LugarCompra.objects.all()
+    # parser_classes = (MultiPartParser,)
     serializer_class = LugarCompraSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    # def get(self, request, *args, **kwargs):
+    #     return self.list(request, *args, **kwargs)
+
+    # def post(self, request, *args, **kwargs):
+    #     return self.create(request, *args, **kwargs)
 
     def upload_docs(self):
         try:
