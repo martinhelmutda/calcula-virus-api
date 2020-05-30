@@ -15,6 +15,7 @@ def lugarFile(instance, filename):
 
 class LugarCompra(models.Model):
     nombre = models.CharField(max_length=120)
+    user = models.CharField( max_length=120)
     descripcion = models.TextField(blank=True)
     image = models.ImageField(
         upload_to=lugarFile,
@@ -39,7 +40,7 @@ class Insumo(models.Model):
         LugarCompra,
         on_delete=models.CASCADE,
     )
-    user = models.ForeignKey( CustomUsers, on_delete = models.CASCADE,null = True)
+    user = models.CharField( max_length=120)
     categoria = models.CharField( max_length=120)
     caducidad = models.DateTimeField('Fecha de Caducidad')
     cantidad = models.CharField( max_length=30 )
