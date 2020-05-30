@@ -2,7 +2,6 @@ from django.db import models
 from datetime import datetime
 from calculavirus.customeUsers.models import CustomUsers
 
-
 # Create your models here.
 
 def productFile(instance, filename):
