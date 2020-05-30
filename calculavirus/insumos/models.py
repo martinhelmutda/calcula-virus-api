@@ -15,8 +15,8 @@ def lugarFile(instance, filename):
 
 class LugarCompra(models.Model):
     nombre = models.CharField(max_length=120)
-    user = models.CharField( max_length=120)
     descripcion = models.TextField(blank=True)
+    user = models.CharField( max_length=120)
     image = models.ImageField(
         upload_to=lugarFile,
         max_length=254, blank=True, null=True,
