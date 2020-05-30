@@ -54,7 +54,10 @@ class InsumoViewSet(viewsets.ModelViewSet):
     @action(detail=False)
     def get_insumo_by_user(self,request):
         user_email=request.GET['user_email']
-        insumos = Insumo.objects.filter(user__email=user_email)
+        
+        print(user_email)
+        print("HOLAAAAA")
+        insumos = Insumo.objects.filter(user=user_email)
         serializer_context = {
             'request': request,
         }
@@ -84,7 +87,9 @@ class InsumoViewSet(viewsets.ModelViewSet):
         insumo.duracion_promedio = request_dict["duracion_promedio"]
         insumo.cantidad = request_dict["cantidad"]
         if(int(pk)==0):
-            insumo.user = CustomUsers.objects.get(id=request_dict["user_id"])
+            #HELP 
+            # insumo.user = CustomUsers.objects.get(id=request_dict["user_id"])
+            insumo.user = request_dict["user"]
         insumo.save()
         return Response({"All":"OK"})
 
