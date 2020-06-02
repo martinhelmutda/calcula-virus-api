@@ -52,11 +52,9 @@ class InsumoViewSet(viewsets.ModelViewSet):
     #@detail_route(methods=['post'])
 
     @action(detail=False)
-    def get_insumo_by_user(self,request):
+    def get_insumos_by_user(self,request):
         user_email=request.GET['user_email']
-        
-        print(user_email)
-        print("HOLAAAAA")
+    
         insumos = Insumo.objects.filter(user=user_email)
         serializer_context = {
             'request': request,
