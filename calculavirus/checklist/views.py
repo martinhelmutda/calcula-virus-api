@@ -37,7 +37,8 @@ class ChecklistViewSet(viewsets.ModelViewSet):
     @action(detail=False)
     def get_checklist_by_user(self,request):
         user_email=request.GET['user_email']
-        checklists = Checklist.objects.filter(user__email=user_email)
+        user = CustomUsers.objects.get(email=user_email)
+        checklists = Checklist.objects.filter(user=user)
         serializer_context = {
             'request': request,
         }
@@ -63,7 +64,7 @@ class ChecklistInsumoViewSet(viewsets.ModelViewSet):
 
     @action(detail=False,methods=['post'])
     def create_insumo_row(self,request):
-        user=CustomUsers.objects.get(id=request.data['user_id'])
+        user=CustomUsers.objects.get(email=request.data['user_email'])
         num_checklists=Checklist.objects.filter(user=user).count()
         if(num_checklists==0):
             check1 = Checklist()

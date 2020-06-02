@@ -1,5 +1,4 @@
 
-
 import calculavirus.insumos.models
 import datetime
 from django.db import migrations, models
