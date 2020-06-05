@@ -54,8 +54,52 @@ class InsumoViewSet(viewsets.ModelViewSet):
     @action(detail=False)
     def get_insumos_by_user(self,request):
         user_email=request.GET['user_email']
-    
-        insumos = Insumo.objects.filter(user=user_email)
+        user = CustomUsers.objects.get(email=user_email)
+        insumos = Insumo.objects.filter(user=user)
+        serializer_context = {
+            'request': request,
+        }
+        serializer =  InsumoSerializer(insumos,many=True,context=serializer_context)
+        return Response({'count':insumos.count(),'next':None,'previous':None,'results':serializer.data})
+
+    @action(detail=False)
+    def get_insumo_by_priority(self,request):
+        user_email=request.GET['user_email']
+        user = CustomUsers.objects.get(email=user_email)
+        insumos = Insumo.objects.filter(user=user).order_by('prioridad')
+        serializer_context = {
+            'request': request,
+        }
+        serializer =  InsumoSerializer(insumos,many=True,context=serializer_context)
+        return Response({'count':insumos.count(),'next':None,'previous':None,'results':serializer.data})
+
+    @action(detail=False)
+    def get_insumo_by_quantity(self,request):
+        user_email=request.GET['user_email']
+        user = CustomUsers.objects.get(email=user_email)
+        insumos = Insumo.objects.filter(user=user).order_by('cantidad')
+        serializer_context = {
+            'request': request,
+        }
+        serializer =  InsumoSerializer(insumos,many=True,context=serializer_context)
+        return Response({'count':insumos.count(),'next':None,'previous':None,'results':serializer.data})
+
+    @action(detail=False)
+    def get_insumo_by_due_date(self,request):
+        user_email=request.GET['user_email']
+        user = CustomUsers.objects.get(email=user_email)
+        insumos = Insumo.objects.filter(user=user).order_by('caducidad')
+        serializer_context = {
+            'request': request,
+        }
+        serializer =  InsumoSerializer(insumos,many=True,context=serializer_context)
+        return Response({'count':insumos.count(),'next':None,'previous':None,'results':serializer.data})
+
+    @action(detail=False)
+    def get_insumo_by_category(self,request):
+        user_email=request.GET['user_email']
+        user = CustomUsers.objects.get(email=user_email)
+        insumos = Insumo.objects.filter(user=user).order_by('categoria')
         serializer_context = {
             'request': request,
         }
@@ -85,9 +129,10 @@ class InsumoViewSet(viewsets.ModelViewSet):
         insumo.duracion_promedio = request_dict["duracion_promedio"]
         insumo.cantidad = request_dict["cantidad"]
         if(int(pk)==0):
-            #HELP 
-            # insumo.user = CustomUsers.objects.get(id=request_dict["user_id"])
-            insumo.user = request_dict["user"]
+            if request.FILES['image']!=None:
+                file_image = request.FILES['image']
+                insumo.image = file_image
+            insumo.user = CustomUsers.objects.get(email=request_dict["user_email"])
         insumo.save()
         return Response({"All":"OK"})
 
