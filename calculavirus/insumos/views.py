@@ -52,7 +52,7 @@ class InsumoViewSet(viewsets.ModelViewSet):
     #@detail_route(methods=['post'])
 
     @action(detail=False)
-    def get_insumo_by_user(self,request):
+    def get_insumos_by_user(self,request):
         user_email=request.GET['user_email']
         user = CustomUsers.objects.get(email=user_email)
         insumos = Insumo.objects.filter(user=user)
@@ -63,7 +63,7 @@ class InsumoViewSet(viewsets.ModelViewSet):
         return Response({'count':insumos.count(),'next':None,'previous':None,'results':serializer.data})
 
     @action(detail=False)
-    def get_insumo_by_priority(self,request):
+    def get_insumos_by_priority(self,request):
         user_email=request.GET['user_email']
         user = CustomUsers.objects.get(email=user_email)
         insumos = Insumo.objects.filter(user=user).order_by('prioridad')
@@ -74,7 +74,7 @@ class InsumoViewSet(viewsets.ModelViewSet):
         return Response({'count':insumos.count(),'next':None,'previous':None,'results':serializer.data})
 
     @action(detail=False)
-    def get_insumo_by_quantity(self,request):
+    def get_insumos_by_quantity(self,request):
         user_email=request.GET['user_email']
         user = CustomUsers.objects.get(email=user_email)
         insumos = Insumo.objects.filter(user=user).order_by('cantidad')
@@ -85,7 +85,7 @@ class InsumoViewSet(viewsets.ModelViewSet):
         return Response({'count':insumos.count(),'next':None,'previous':None,'results':serializer.data})
 
     @action(detail=False)
-    def get_insumo_by_due_date(self,request):
+    def get_insumos_by_due_date(self,request):
         user_email=request.GET['user_email']
         user = CustomUsers.objects.get(email=user_email)
         insumos = Insumo.objects.filter(user=user).order_by('caducidad')
@@ -96,7 +96,7 @@ class InsumoViewSet(viewsets.ModelViewSet):
         return Response({'count':insumos.count(),'next':None,'previous':None,'results':serializer.data})
 
     @action(detail=False)
-    def get_insumo_by_category(self,request):
+    def get_insumos_by_category(self,request):
         user_email=request.GET['user_email']
         user = CustomUsers.objects.get(email=user_email)
         insumos = Insumo.objects.filter(user=user).order_by('categoria')
@@ -116,11 +116,9 @@ class InsumoViewSet(viewsets.ModelViewSet):
         else:
             insumo=Insumo.objects.get(pk=pk)
         request_dict=request.data.dict()
-        lugar=LugarCompra.objects.get(id=request_dict["lugar_compra"])
         insumo.nombre=request_dict["nombre"]
         insumo.marca = request_dict["marca"]
         insumo.descripcion = request_dict["descripcion"]
-        insumo.lugar_compra = lugar
         insumo.categoria = request_dict["categoria"]
         insumo.caducidad = datetime.datetime(int(request_dict["caducidad_year"]),
                                              int(request_dict["caducidad_month"]),
@@ -133,6 +131,8 @@ class InsumoViewSet(viewsets.ModelViewSet):
                 file_image = request.FILES['image']
                 insumo.image = file_image
             insumo.user = CustomUsers.objects.get(email=request_dict["user_email"])
+            lugar = LugarCompra.objects.get(id=request_dict["lugar_compra"])
+            insumo.lugar_compra = lugar
         insumo.save()
         return Response({"All":"OK"})
 
