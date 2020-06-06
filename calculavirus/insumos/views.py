@@ -52,7 +52,7 @@ class InsumoViewSet(viewsets.ModelViewSet):
     #@detail_route(methods=['post'])
 
     @action(detail=False)
-    def get_insumo_by_user(self,request):
+    def get_insumos_by_user(self,request):
         user_email=request.GET['user_email']
         user = CustomUsers.objects.get(email=user_email)
         insumos = Insumo.objects.filter(user=user)
@@ -165,6 +165,15 @@ class LugarCompraViewSet(viewsets.ModelViewSet):
 
     # def post(self, request, *args, **kwargs):
     #     return self.create(request, *args, **kwargs)
+    @action(detail=False)
+    def get_lugares_by_user(self,request):
+        user_email=request.GET['user_email']
+        lugares = LugarCompra.objects.filter(user=user_email)
+        serializer_context = {
+            'request': request,
+        }
+        serializer =  LugarCompraSerializer(lugares,many=True,context=serializer_context)
+        return Response({'count':lugares.count(),'next':None,'previous':None,'results':serializer.data})
 
     def upload_docs(self):
         try:

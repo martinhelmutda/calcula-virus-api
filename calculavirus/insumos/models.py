@@ -20,7 +20,7 @@ class LugarCompra(models.Model):
     image = models.ImageField(
         upload_to=lugarFile,
         max_length=254, blank=True, null=True,
-        default = "location.png"
+        default = "market.jpg"
     )
 
     # def __init__(self, name, creation, update, *args, **kwargs):
@@ -31,6 +31,7 @@ class LugarCompra(models.Model):
 
     def __str__(self):
         return "%s" % self.nombre
+
 
 class Insumo(models.Model):
     nombre = models.CharField( max_length=120)
@@ -48,6 +49,7 @@ class Insumo(models.Model):
     duracion_promedio = models.IntegerField()
     image = models.ImageField(
         upload_to=productFile,
-        max_length=254, blank=True, null=True
+        max_length=254, blank=True, null=True,
+        default = "basket.jpg"
     )
     fecha_ultima_compra = models.DateTimeField(default=datetime.now)
